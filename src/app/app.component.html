@@ -11,7 +11,7 @@
                     </div>
                     
                     
-                    
+                     
                  
                 </div>
             </div>
@@ -20,7 +20,26 @@
                 <div id="searchBar">
                     <p id="searchBarTitle">{{currentTab}}</p>
                     <div id="searchInput">
-                    
+                    <!--<a class="addResource"> Add Resource </a>-->
+                    <a class="waves-effect waves-light btn" (click)="openModal()" href="#modal1">Add Resource</a>
+
+                    <!-- Modal Structure -->
+                    <div id="modal1" class="modal">
+                        <div class="modal-content">
+                            <h4>Create a resource in {{currentTab}}</h4>
+                            <label for="first_name">Title</label>
+                            <input class="title"(keyup)="userPressedResourceInputKey($event)" [(ngModel)]="newResourceTitle"/>
+                            <label for="first_name">Link</label>
+                            <input class="link"(keyup)="userPressedResourceInputKey($event)" [(ngModel)]="newResourceLink"/>
+                            <label for="first_name">Description</label>
+                            <input class="description" (keyup)="userPressedResourceInputKey($event)" [(ngModel)]="newResourceDescription"/>
+                        </div>
+                        <div class="modal-footer">
+                            <a (click)="addResource()" class=" modal-action modal-close waves-effect waves-green btn-flat">Create</a>
+                        </div>
+                    </div>                    
+                    <!--<input type="text" name="searchterm" placeholder="Search Resources">-->
+                    </div>
                 </div>
                 <div id="mainContentWindow">
                     <div id="resourceBox" >
