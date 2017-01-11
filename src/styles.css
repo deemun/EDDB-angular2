@@ -1,1 +1,129 @@
 /* You can add global styles to this file, and also import other style files */
+#mainContainer {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+#navBar {
+    background-color: green;
+    width: 20%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#content {
+    background-color: blue;
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+#brandLogo {
+    width: 100%;
+    height: 20%;
+    background-color:#616161;
+    text-align: center;
+    
+    
+}
+#navbarOptions {
+    background-color: #FAFAFA;
+    width: 100%;
+    height: 100%;
+}
+
+#brandImage {
+    /*height: 100%;*/
+    width: 100%;
+
+    background-color:#616161;
+}
+
+.resourceInner {
+    overflow:auto;
+}
+
+.navbarButton {
+    background-color:white;
+    font-family: 'Open Sans', sans-serif;
+    text-align: center;
+    height:50px;
+    /*padding-top: 30px;*/
+    /*margin: 10px;*/
+    margin-top: 2px;
+    margin-bottom: 2px;
+    line-height: 50px;
+    transition:.5s;
+}
+
+#searchBar {
+    background-color: #D7D7D7;
+    height:80px;
+    width:100%;
+    display:flex;
+    flex-direction: row;
+}
+
+#searchInput {
+    margin-left: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 22px;
+
+}
+
+
+/* When spacing text like search bar title, use line height instead of margin or padding in this scenario*/
+#searchBarTitle {
+    margin-left: 44px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 21px;
+    margin-top: 20px;
+    color: #616161; 
+}
+
+input,
+input::-webkit-input-placeholder {
+    font-size: 18px;
+    /*line-height: 3;*/
+}
+
+#mainContentWindow {
+    background-color: #EEEEEE;
+    display: flex;
+    flex-direction: column;
+    height:100%;
+    /*overflow:auto;*/
+}
+
+.navbarButton:hover { 
+    background-color: #D7D7D7;
+}
+
+#resourceBox {
+    margin:22px;
+    padding:22px;
+    background-color:white;
+    height:100%;
+    overflow:auto;
+    
+}
+
+
+
+.addResource {
+    border-style: solid;
+    border-color: white;
+    background-color: white;
+    padding:2px;
+    margin-left:100px;
+    font-family: 'Open Sans', sans-serif;
+
+}
+
+h3, p {
+    font-family: 'Open Sans', sans-serif;
+    
+}

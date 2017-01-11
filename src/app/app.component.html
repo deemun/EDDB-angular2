@@ -1,3 +1,40 @@
-<h1>
-  {{title}}
-</h1>
+        <div id="mainContainer">
+            <div id="navBar">
+                
+                <div id="brandLogo">
+                    
+                    <img id="brandImage" src="assets/ed-logo-biggest.png">
+                </div>
+                <div id="navbarOptions">
+                    <div (click)="clicked(tab)" class="navbarButton" *ngFor="let tab of tabs">
+                        <a>{{tab}}</a>
+                    </div>
+                    
+                    
+                    
+                 
+                </div>
+            </div>
+
+            <div id="content">
+                <div id="searchBar">
+                    <p id="searchBarTitle">{{currentTab}}</p>
+                    <div id="searchInput">
+                    
+                </div>
+                <div id="mainContentWindow">
+                    <div id="resourceBox" >
+                        <div *ngFor="let resource of currentResources">
+                        
+                        <h3><a href="{{resource.link}}" target='_blank'>{{resource.title}}</a></h3>
+                        <p> {{resource.description}} </p>
+                        </div>
+                   
+                    
+                        
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
