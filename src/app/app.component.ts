@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Resources, Tabs } from './app.data';
+import { Resources } from './app.data';
 var $ = (window as any).$;
 
 @Component({
@@ -13,7 +13,7 @@ export class AppComponent {
   tabs = ["tab1", "tab2", "tab3"]
   currentTab = this.tabs[0];
   currentResources = Resources[this.currentTab]; //making sure the resources come under the right tabName
-  
+
   newResourceTitle = ""
   newResourceDescription = ""
   newResourceLink = ""
@@ -23,7 +23,6 @@ export class AppComponent {
     this.currentTab = tab;
     this.currentResources = Resources[this.currentTab];
   }
-
 
 
 
