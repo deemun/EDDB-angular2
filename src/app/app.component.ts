@@ -3,14 +3,58 @@ import { Component, Input,
   state,
   style,
   transition,
-  animate } from '@angular/core';
+  animate,
+  keyframes } from '@angular/core';
 import { Resources, Tabs } from './app.data';
 var $ = (window as any).$;
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations: [
+
+      trigger('focusPanel', [
+      state('inactive', style({
+        backgroundColor: '#eee',
+        transform: 'scale(1)'
+      })),
+      state('active',   style({
+        backgroundColor: '#cfd8dc',
+        transform: 'scale(1.1)'
+      })),
+      transition('inactive => active', animate('100ms ease-in')),
+      transition('active => inactive', animate('100ms ease-out'))
+    ]),
+       trigger('movePanel', [
+            
+            transition('void => *', [
+                animate(600, keyframes([
+                    style({opacity: 0, transform: 'translateY(-100px)', offset: 0}),
+                    style({opacity: 1, transform: 'translateY(25px)', offset: .75}),
+                    style({opacity: 1, transform: 'translateY(0)', offset: 1}),
+                ]))
+            ])
+            
+
+        ]),
+         trigger('moveTab', [
+            
+            transition('void => *', [
+                animate(800, keyframes([
+                    style({opacity: 0}),
+                    style({opacity: 0.5}),
+                    style({opacity: 1}),
+                ]))
+            ])
+            
+
+        ])
+        
+
+
+
+    ]
 })
 export class AppComponent {
   
@@ -22,6 +66,7 @@ export class AppComponent {
   newResourceTitle = ""
   newResourceDescription = ""
   newResourceLink = ""
+  state: string = 'inactive'
 
 
   clicked(tab){
@@ -64,6 +109,9 @@ export class AppComponent {
     console.log(resource);
     console.log(this.currentResources);
     this.currentResources.push(resource);
+    this.newResourceTitle = "";
+    this.newResourceLink = "";
+    this.newResourceDescription = "";
   }
 
 
@@ -72,7 +120,9 @@ export class AppComponent {
     $('.modal').modal()
   }
 
-
+  toggleResource(){
+   this.state = (this.state === 'inactive' ? 'active' : 'inactive');
+  }
 
 }
 

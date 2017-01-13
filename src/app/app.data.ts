@@ -2,20 +2,55 @@
 export var Resources = {
     "tab1": [
         {
-            title: "This is the first title",
+            title: "This is a tab 1 resource title",
             link: "Link",
-            description:"This is description example, blah blah"
+            description:"This is a description example"
         },
         {
-            title: "This is the first title",
+            title: "This is a tab 1 resource title",
             link: "Link",
-            description:"This is description example, blah blah"   
+            description:"This is a description example"   
+        },
+        {
+            title: "This is a tab 1 resource title",
+            link: "Link",
+            description:"This is a description example"   
+        },
+        {
+            title: "This is a tab 1 resource title",
+            link: "Link",
+            description:"This is a description example"   
+        },
+        {
+            title: "This is a tab 1 resource title",
+            link: "Link",
+            description:"This is a description example"   
+        },
+        {
+            title: "This is a tab 1 resource title",
+            link: "Link",
+            description:"This is a description example"   
+        },
+        {
+            title: "This is a tab 1 resource title",
+            link: "Link",
+            description:"This is a description example"   
+        },
+        {
+            title: "This is a tab 1 resource title",
+            link: "Link",
+            description:"This is a description example"   
+        },
+        {
+            title: "This is a tab 1 resource title",
+            link: "Link",
+            description:"This is a description example"   
         }
     ],
 
     "tab2": [
         {
-            title: "This is tab 2 resource",
+            title: "This is a tab 2 resource",
             link: "Link",
             description:"This is description example, blah blah"
         },

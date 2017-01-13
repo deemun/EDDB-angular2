@@ -59,6 +59,11 @@
     transition:.5s;
 }
 
+.navbarButton:focus {
+    height:1000px;
+    
+}
+
 #searchBar {
     background-color: #D7D7D7;
     height:80px;
@@ -99,9 +104,13 @@ input::-webkit-input-placeholder {
     /*overflow:auto;*/
 }
 
-.navbarButton:hover { 
-    background-color: #D7D7D7;
+/*.navbarButton:hover { 
+    background-color: #616161;
 }
+
+#navbarOptions .navbarButton:hover { 
+    color:white !important;
+}*/
 
 #resourceBox {
     margin:22px;
@@ -127,4 +136,13 @@ input::-webkit-input-placeholder {
 h3, p {
     font-family: 'Open Sans', sans-serif;
     
+}
+
+#singleResource {
+    padding:10px;
+    transition: background-color 0.5s ease
+}
+
+#singleResource:hover {
+    background-color:#D7D7D7;
 }

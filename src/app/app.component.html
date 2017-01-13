@@ -6,7 +6,7 @@
                     <img id="brandImage" src="assets/ed-logo-biggest.png">
                 </div>
                 <div id="navbarOptions">
-                    <div (click)="clicked(tab)" class="navbarButton" *ngFor="let tab of tabs">
+                    <div (click)="clicked(tab)" class="navbarButton" *ngFor="let tab of tabs" (click)="toggleResource()" [@moveTab]='state' >
                         <a>{{tab}}</a>
                     </div>
                     
@@ -18,7 +18,7 @@
 
             <div id="content">
                 <div id="searchBar">
-                    <p id="searchBarTitle">{{currentTab}}</p>
+                    <p id="searchBarTitle" >{{currentTab}}</p>
                     <div id="searchInput">
                     <!--<a class="addResource"> Add Resource </a>-->
                     <a class="waves-effect waves-light btn" (click)="openModal()" href="#modal1">Add Resource</a>
@@ -43,7 +43,7 @@
                 </div>
                 <div id="mainContentWindow">
                     <div id="resourceBox" >
-                        <div id="singleResource" *ngFor="let resource of currentResources">
+                        <div id="singleResource" (click)="toggleResource()" [@movePanel]='state'  *ngFor="let resource of currentResources">
                         
                         <h3><a href="{{resource.link}}" target='_blank'>{{resource.title}}</a></h3>
                         <p> {{resource.description}} </p>
