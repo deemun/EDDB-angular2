@@ -28,3 +28,4 @@ export var Resources = {
     "tab3": []
 }
 
+export var Tabs = (Resources as any).keys;

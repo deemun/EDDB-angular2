@@ -11,7 +11,7 @@
                     </div>
                     
                     
-                    <input><button (click)="newTab()">Create New tab </button> 
+                    <input (keyup)="userPressedTabInputKey($event)" [(ngModel)]="newTabName"/><button (click)="newTab()">Create New tab </button> 
                  
                 </div>
             </div>
@@ -43,7 +43,7 @@
                 </div>
                 <div id="mainContentWindow">
                     <div id="resourceBox" >
-                        <div *ngFor="let resource of currentResources">
+                        <div id="singleResource" *ngFor="let resource of currentResources">
                         
                         <h3><a href="{{resource.link}}" target='_blank'>{{resource.title}}</a></h3>
                         <p> {{resource.description}} </p>

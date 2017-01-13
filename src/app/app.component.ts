@@ -1,5 +1,10 @@
-import { Component } from '@angular/core';
-import { Resources } from './app.data';
+import { Component, Input,
+  trigger,
+  state,
+  style,
+  transition,
+  animate } from '@angular/core';
+import { Resources, Tabs } from './app.data';
 var $ = (window as any).$;
 
 @Component({
@@ -13,7 +18,7 @@ export class AppComponent {
   tabs = ["tab1", "tab2", "tab3"]
   currentTab = this.tabs[0];
   currentResources = Resources[this.currentTab]; //making sure the resources come under the right tabName
-
+  newTabName = ''
   newResourceTitle = ""
   newResourceDescription = ""
   newResourceLink = ""
@@ -24,7 +29,17 @@ export class AppComponent {
     this.currentResources = Resources[this.currentTab];
   }
 
+  newTab(){
+    if (this.newTabName.length > 0) {
+      this.tabs.push(this.newTabName); //validation and tab pushed into the array.
+    }
+    this.newTabName = ""; //sets the input box to blank
+  }
 
+  userPressedTabInputKey(event){
+    this.newTabName = event.target.value; //saving the tab name 
+  
+  }
 
   userPressedResourceInputKey(event) {
      //passing the event and saving variables
@@ -47,6 +62,7 @@ export class AppComponent {
     }
 
     console.log(resource);
+    console.log(this.currentResources);
     this.currentResources.push(resource);
   }
 
