@@ -2,9 +2,9 @@
 export var Resources = {
     "tab1": [
         {
-            title: "This is a tab 1 resource title",
-            link: "Link",
-            description:"This is a description example"
+            title: "Emergency Medicine Handbook",
+            link: "https://emergencymedicinecases.com/wp-content/uploads/filebase/pdf/EM-Cases-Course-Pre-course-Handbook-2016.pdf",
+            description:"To discuss the various approaches to airway management in obese patients, those in shock, burn patients and head injured patients."
         },
         {
             title: "This is a tab 1 resource title",

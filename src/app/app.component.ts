@@ -6,7 +6,9 @@ import { Component, Input,
   animate,
   keyframes } from '@angular/core';
 import { Resources, Tabs } from './app.data';
-var $ = (window as any).$;
+import {AngularFire, FirebaseListObservable} from 'angularfire2';
+
+var $ = (window as any).$; //letting jquery be used in the application, typescript throwing errors
 
 @Component({
   selector: 'app-root',
@@ -59,15 +61,20 @@ var $ = (window as any).$;
 export class AppComponent {
   
   title = 'app works!';
-  tabs = ["tab1", "tab2", "tab3"]
+  tabs = ["tab1", "tab2", "tab3"];
   currentTab = this.tabs[0];
   currentResources = Resources[this.currentTab]; //making sure the resources come under the right tabName
-  newTabName = ''
-  newResourceTitle = ""
-  newResourceDescription = ""
-  newResourceLink = ""
-  state: string = 'inactive'
-
+  newTabName = '';
+  newResourceTitle = "";
+  newResourceDescription = "";
+  newResourceLink = "";
+  state: string = 'inactive';
+  RemoteResources: any;
+  
+  constructor(af: AngularFire) {
+    console.log(af);
+    this.RemoteResources = af.database.object("/Resources");
+  }
 
   clicked(tab){
     this.currentTab = tab;
@@ -76,7 +83,10 @@ export class AppComponent {
 
   newTab(){
     if (this.newTabName.length > 0) {
-      this.tabs.push(this.newTabName); //validation and tab pushed into the array.
+      this.tabs.push(this.newTabName);
+      Resources[this.newTabName] = []; // syntax for setting and getting a key is similar in hashs
+      this.clicked(this.newTabName); // calling clicked function to set tab
+       //validation and tab pushed into the array.
     }
     this.newTabName = ""; //sets the input box to blank
   }
@@ -111,7 +121,7 @@ export class AppComponent {
     this.currentResources.push(resource);
     this.newResourceTitle = "";
     this.newResourceLink = "";
-    this.newResourceDescription = "";
+    this.newResourceDescription = ""; // make sure resources default to nothing once added.
   }
 
 

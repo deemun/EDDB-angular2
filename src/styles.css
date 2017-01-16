@@ -104,13 +104,13 @@ input::-webkit-input-placeholder {
     /*overflow:auto;*/
 }
 
-/*.navbarButton:hover { 
+.navbarButton:hover { 
     background-color: #616161;
 }
 
 #navbarOptions .navbarButton:hover { 
     color:white !important;
-}*/
+}
 
 #resourceBox {
     margin:22px;
@@ -145,4 +145,13 @@ h3, p {
 
 #singleResource:hover {
     background-color:#D7D7D7;
+}
+
+.btn {
+ background-color: #626262;
+ transition: width height background-color 0.5s ease
+}
+
+.btn:hover, .btn-large:hover {
+    background-color: #323232;
 }
