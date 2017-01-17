@@ -9,27 +9,32 @@ export var Resources = {
         {
             title: "This is a tab 1 resource title",
             link: "Link",
-            description:"This is a description example"   
+            description:"This is a description example",
+            date:""    
         },
         {
             title: "This is a tab 1 resource title",
             link: "Link",
-            description:"This is a description example"   
+            description:"This is a description example",
+            date:""       
         },
         {
             title: "This is a tab 1 resource title",
             link: "Link",
-            description:"This is a description example"   
+            description:"This is a description example",
+            date:""       
         },
         {
             title: "This is a tab 1 resource title",
             link: "Link",
-            description:"This is a description example"   
+            description:"This is a description example",
+            date:""       
         },
         {
             title: "This is a tab 1 resource title",
             link: "Link",
-            description:"This is a description example"   
+            description:"This is a description example",
+            date:""       
         },
         {
             title: "This is a tab 1 resource title",
@@ -57,7 +62,8 @@ export var Resources = {
         {
             title: "This is a tab 2 resource",
             link: "Link",
-            description:"This is description example, blah blah"   
+            description:"This is description example, blah blah", 
+            date:""  
         }
     ],
     "tab3": []

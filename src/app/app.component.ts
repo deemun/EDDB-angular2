@@ -6,7 +6,7 @@ import { Component, Input,
   animate,
   keyframes } from '@angular/core';
 import { Resources, Tabs } from './app.data';
-import {AngularFire, FirebaseListObservable} from 'angularfire2';
+import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
 
 var $ = (window as any).$; //letting jquery be used in the application, typescript throwing errors
 
@@ -69,11 +69,12 @@ export class AppComponent {
   newResourceDescription = "";
   newResourceLink = "";
   state: string = 'inactive';
-  RemoteResources: any;
+  RemoteResources: FirebaseObjectObservable<any>;
   
   constructor(af: AngularFire) {
-    console.log(af);
+    // console.log(af);
     this.RemoteResources = af.database.object("/Resources");
+    console.log(this.RemoteResources);
   }
 
   clicked(tab){
@@ -113,7 +114,8 @@ export class AppComponent {
     var resource = {
       title : this.newResourceTitle,
       link : this.newResourceLink,
-      description : this.newResourceDescription
+      description : this.newResourceDescription,
+      time: new Date().toLocaleString()
     }
 
     console.log(resource);
@@ -128,6 +130,7 @@ export class AppComponent {
 
   openModal(){ 
     $('.modal').modal()
+    
   }
 
   toggleResource(){
