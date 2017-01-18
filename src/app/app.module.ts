@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule, RequestOptions } from '@angular/http';
 import { AngularFireModule } from 'angularfire2';
 import 'rxjs/add/operator/map';
+import { DataService } from './data.service';
 
 import { AppComponent } from './app.component';
 
@@ -27,7 +28,7 @@ export const firebaseConfig = {
     HttpModule,
     AngularFireModule.initializeApp(firebaseConfig)
   ],
-  providers: [],
+  providers: [DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

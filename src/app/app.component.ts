@@ -5,9 +5,10 @@ import { Component, Input,
   transition,
   animate,
   keyframes } from '@angular/core';
-import { Resources, Tabs } from './app.data';
-import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
+
+// import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
 import { DataService } from './data.service';
+declare var firebase: any;
 
 var $ = (window as any).$; //letting jquery be used in the application, typescript throwing errors
 
@@ -62,45 +63,68 @@ var $ = (window as any).$; //letting jquery be used in the application, typescri
 })
 export class AppComponent {
   
+  resources:any = {};
   title = 'app works!';
-  tabs = ["tab1", "tab2", "tab3"];
+  tabs = [];
   currentTab = this.tabs[0];
-  currentResources = Resources[this.currentTab]; //making sure the resources come under the right tabName
+  currentResources = this.resources[this.currentTab]; //making sure the resources come under the right tabName
   newTabName = '';
   newResourceTitle = "";
   newResourceDescription = "";
   newResourceLink = "";
   newResourceAuthor = "";
-  state: string = 'inactive';
-  RemoteResource: FirebaseObjectObservable<any>;
-  Resources = [];
   
-  constructor(af: AngularFire, private dataService: DataService) {
+  state: string = 'inactive';
+  currentEditedResource = {title : "", link: "", description: ""};
+  // RemoteResource: FirebaseObjectObservable<any>;
+  
+  
+  constructor(private dataService: DataService) { //creating a dataService to refer to DataService
+    // af: AngularFire was above in constructor.
     // console.log(af);
-    this.RemoteResource = af.database.object("/Resources");
-    this.RemoteResource.subscribe(() => console.log("resources have loaded"));
+    // this.RemoteResource = af.database.object("/Resources");
+    // this.RemoteResource.subscribe(() => console.log("resources have loaded"));
     
   }
 
+  //FIREBASE METHODS
   ngOnInit(){
-    this.dataService.fetchData().subscribe(
-          (data) => console.log(data)
-        );
+    //  this.dataService.fetchData().subscribe(data => {
+    //         this.resources = data;
+    //         debugger;  
+    //         this.currentResources = this.resources[this.currentTab];
+    // });
 
+    this.fbGetData();
   }
+
+  fbGetData(){
+    firebase.database().ref('/').once('child_added', (snapshot) => {
+      debugger;
+      this.resources = (snapshot.val());
+      this.tabs = (Object.keys(this.resources)); //getting tabs into an array
+
+      this.currentTab = this.tabs[0]; // 
+      // this.currentResources = this.resources[this.currentTab];
+    })
+  }
+  
   
 
   clicked(tab){
     this.currentTab = tab;
-    this.currentResources = Resources[this.currentTab];
+    this.currentResources = this.resources[this.currentTab];
   }
 
   newTab(){
     if (this.newTabName.length > 0) {
       this.tabs.push(this.newTabName);
-      Resources[this.newTabName] = []; // syntax for setting and getting a key is similar in hashs
+      this.resources[this.newTabName] = []; // syntax for setting and getting a key is similar in hashs
       this.clicked(this.newTabName); // calling clicked function to set tab
        //validation and tab pushed into the array.
+       
+      this.saveResourcesToFirebase();
+
     }
     this.newTabName = ""; //sets the input box to blank
   }
@@ -137,9 +161,17 @@ export class AppComponent {
     console.log(resource);
     console.log(this.currentResources);
     this.currentResources.push(resource);
+    
+    this.saveResourcesToFirebase();
+
     this.newResourceTitle = "";
     this.newResourceLink = "";
     this.newResourceDescription = ""; // make sure resources default to nothing once added.
+  }
+
+  saveResourcesToFirebase(){
+    firebase.database().ref('/resources').update(this.resources);
+   
   }
 
 
@@ -151,6 +183,13 @@ export class AppComponent {
 
   toggleResource(){
    this.state = (this.state === 'inactive' ? 'active' : 'inactive');
+  }
+
+  clickedEdit(resource){
+    this.openModal()
+    this.currentEditedResource = resource;
+
+
   }
 
 }
