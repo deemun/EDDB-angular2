@@ -155,3 +155,7 @@ h3, p {
 .btn:hover, .btn-large:hover {
     background-color: #323232;
 }
+
+.editButton {
+    font-size: 12px;
+}

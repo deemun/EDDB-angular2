@@ -7,6 +7,7 @@ import { Component, Input,
   keyframes } from '@angular/core';
 import { Resources, Tabs } from './app.data';
 import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
+import { DataService } from './data.service';
 
 var $ = (window as any).$; //letting jquery be used in the application, typescript throwing errors
 
@@ -14,6 +15,7 @@ var $ = (window as any).$; //letting jquery be used in the application, typescri
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
+  providers: [DataService],
   animations: [
 
       trigger('focusPanel', [
@@ -68,14 +70,25 @@ export class AppComponent {
   newResourceTitle = "";
   newResourceDescription = "";
   newResourceLink = "";
+  newResourceAuthor = "";
   state: string = 'inactive';
-  RemoteResources: FirebaseObjectObservable<any>;
+  RemoteResource: FirebaseObjectObservable<any>;
+  Resources = [];
   
-  constructor(af: AngularFire) {
+  constructor(af: AngularFire, private dataService: DataService) {
     // console.log(af);
-    this.RemoteResources = af.database.object("/Resources");
-    console.log(this.RemoteResources);
+    this.RemoteResource = af.database.object("/Resources");
+    this.RemoteResource.subscribe(() => console.log("resources have loaded"));
+    
   }
+
+  ngOnInit(){
+    this.dataService.fetchData().subscribe(
+          (data) => console.log(data)
+        );
+
+  }
+  
 
   clicked(tab){
     this.currentTab = tab;
@@ -106,6 +119,8 @@ export class AppComponent {
       this.newResourceLink = event.target.value
     } else if ($(event.target).hasClass('description')){
       this.newResourceDescription = event.target.value
+    } else if ($(event.target).hasClass('author')){
+      this.newResourceAuthor = event.target.value
     }
     
   }
@@ -115,7 +130,8 @@ export class AppComponent {
       title : this.newResourceTitle,
       link : this.newResourceLink,
       description : this.newResourceDescription,
-      time: new Date().toLocaleString()
+      time: new Date().toLocaleString(),
+      author: this.newResourceAuthor
     }
 
     console.log(resource);
