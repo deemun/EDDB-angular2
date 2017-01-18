@@ -101,11 +101,11 @@ export class AppComponent {
   fbGetData(){
     firebase.database().ref('/').once('child_added', (snapshot) => {
       debugger;
-      this.resources = (snapshot.val());
+      this.resources = (snapshot.val()); // snapshot.val are the objects coming in
       this.tabs = (Object.keys(this.resources)); //getting tabs into an array
 
       this.currentTab = this.tabs[0]; // 
-      // this.currentResources = this.resources[this.currentTab];
+      this.currentResources = this.resources[this.currentTab];
     })
   }
   
@@ -193,5 +193,8 @@ export class AppComponent {
   }
 
 }
+
+
+
 
 
