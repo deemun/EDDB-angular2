@@ -23,7 +23,7 @@
                     <!--<a class="addResource"> Add Resource </a>-->
                     <a class="waves-effect waves-light btn" (click)="openModal()" href="#modal1">Add Resource</a>
 
-                    <!-- Modal Structure -->
+                    <!-- CREATE RESOURCE Modal Structure -->
                     <div id="modal1" class="modal">
                         <div class="modal-content">
                             <h4>Create a resource in {{currentTab}}</h4>
@@ -46,26 +46,37 @@
                 </div>
                 <div id="mainContentWindow">
                     <div id="resourceBox" >
-                        <div id="singleResource" (click)="toggleResource()" [@movePanel]='state'  *ngFor="let resource of currentResources">
+                        <div (click)="toggleResource()" [@movePanel]='state'  *ngFor="let resource of currentResources">
                         
-                        <h3><a href="{{resource.link}}" target='_blank'>{{resource.title}}</a><a style="float:right;" class="waves-effect waves-light btn editButton" (click)="clickedEdit(resource)" href="#editModal">Edit</a></h3>
-                        <p> {{resource.description}}</p>
-                        <p style="text-align: right;"><i> Last Updated by {{ resource.author }} on {{ resource.time }} </i></p>
+                        
+
+                         <ul class="collapsible" data-collapsible="accordion">
+                            <li>
+                            <div class="collapsible-header"><a href="{{resource.link}}" target="_blank">{{resource.title}}</a></div>
+                            <div  id="singleResource" class="collapsible-body">
+                                    <p> {{resource.description}} <a style="float:right;" class="waves-effect waves-light btn editButton" (click)="clickedEdit(resource)" href="#editModal">Edit</a></p>
+                                    <p style="text-align: left;"><i> Last Updated by {{ resource.author }} on {{ resource.time }} </i></p>
+                            </div>
+                            </li>
+                        </ul>
+                       
+                       <!-- EDIT RESOURCES MODAL -->
                         <div id="editModal" class="modal">
                         <div class="modal-content">
-                            <h4>Edit {{resource.title}}</h4>
+                            <h5>Edit {{resource.title}}</h5>
                             <label for="first_name">Title</label>
                             <input class="title"(keyup)="userPressedResourceInputKey($event)" [(ngModel)]="currentEditedResource.title"/>
                             <label for="first_name">Link</label>
                             <input class="link"(keyup)="userPressedResourceInputKey($event)" [(ngModel)]="currentEditedResource.link"/>
                             <label for="first_name">Description</label>
                             <input class="description" (keyup)="userPressedResourceInputKey($event)" [(ngModel)]="currentEditedResource.description"/>
-                            
+                            <label for="first_name">Created By</label>
+                            <input class="author" (keyup)="userPressedResourceInputKey($event)" [(ngModel)]="currentEditedResource.author" />
                         </div>
                         <div class="modal-footer">
-                            <a (click)="saveResourcesToFirebase()" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="Materialize.toast('Resource Added!', 3000, 'rounded')">Create</a>
+                            <a (click)="saveEditResourcesToFirebase(resource)" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="Materialize.toast('Resource Saved', 3000, 'rounded')">Save Edit</a>
                         </div>
-                    </div>                             
+                        </div>                             
                         </div>
                    
                     

@@ -75,16 +75,19 @@ export class AppComponent {
   newResourceAuthor = "";
   
   state: string = 'inactive';
-  currentEditedResource = {title : "", link: "", description: ""};
+  currentEditedResource = {title : "", link: "", description: "", time: new Date().toLocaleString()};
   // RemoteResource: FirebaseObjectObservable<any>;
   
   
   constructor(private dataService: DataService) { //creating a dataService to refer to DataService
-    // af: AngularFire was above in constructor.
-    // console.log(af);
-    // this.RemoteResource = af.database.object("/Resources");
-    // this.RemoteResource.subscribe(() => console.log("resources have loaded"));
+   
     
+    // var password = "eddbubc";
+    // var myChoice = prompt("Please enter the password");
+    // while(myChoice != password){
+    //   myChoice = prompt("Please enter a valid password");
+    // }  //simple password prompt.
+   
   }
 
   //FIREBASE METHODS
@@ -100,7 +103,7 @@ export class AppComponent {
 
   fbGetData(){
     firebase.database().ref('/').once('child_added', (snapshot) => {
-      debugger;
+      
       this.resources = (snapshot.val()); // snapshot.val are the objects coming in
       this.tabs = (Object.keys(this.resources)); //getting tabs into an array
 
@@ -149,7 +152,7 @@ export class AppComponent {
     
   }
 
-  addResource(){
+  addResource(){ //saving resources using method above and (click)
     var resource = {
       title : this.newResourceTitle,
       link : this.newResourceLink,
@@ -157,9 +160,6 @@ export class AppComponent {
       time: new Date().toLocaleString(),
       author: this.newResourceAuthor
     }
-
-    console.log(resource);
-    console.log(this.currentResources);
     this.currentResources.push(resource);
     
     this.saveResourcesToFirebase();
@@ -171,7 +171,6 @@ export class AppComponent {
 
   saveResourcesToFirebase(){
     firebase.database().ref('/resources').update(this.resources);
-   
   }
 
 
@@ -183,16 +182,29 @@ export class AppComponent {
 
   toggleResource(){
    this.state = (this.state === 'inactive' ? 'active' : 'inactive');
+   console.log("single resource clicked");
+    $(document).ready(function(){
+    $('.collapsible').collapsible();
+  });
   }
 
   clickedEdit(resource){
     this.openModal()
     this.currentEditedResource = resource;
+    
 
 
   }
 
+  saveEditResourcesToFirebase(resource){    //edited resource being saved, needed another method because of new timestamp
+    resource.time = new Date().toLocaleString();
+    firebase.database().ref('/resources').update(this.resources);
+  }
+  
+
 }
+
+
 
 
 
