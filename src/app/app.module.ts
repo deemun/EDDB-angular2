@@ -5,7 +5,7 @@ import { HttpModule, RequestOptions } from '@angular/http';
 import { AngularFireModule } from 'angularfire2';
 import 'rxjs/add/operator/map';
 import { DataService } from './data.service';
-
+import { FilterPipe } from './filter.pipe';
 import { AppComponent } from './app.component';
 
 
@@ -20,7 +20,7 @@ export const firebaseConfig = {
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent, FilterPipe
   ],
   imports: [
     BrowserModule,

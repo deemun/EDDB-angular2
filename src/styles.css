@@ -59,6 +59,14 @@
     transition:.5s;
 }
 
+.navbarButton:hover { 
+    background-color: #616161;
+}
+
+.navbarButtonSelected { 
+    background-color: #616161;
+}
+
 .navbarButton:focus {
     height:1000px;
     
@@ -72,7 +80,14 @@
     flex-direction: row;
 }
 
-#searchInput {
+#filter{
+    margin-left: auto;
+    margin-right: 60px;
+    display: inline-flex;
+    margin-top:10px;
+}
+
+#addResourceButton {
     margin-left: auto;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -104,13 +119,7 @@ input::-webkit-input-placeholder {
     /*overflow:auto;*/
 }
 
-.navbarButton:hover { 
-    background-color: #616161;
-}
 
-#navbarOptions .navbarButton:hover { 
-    color:white !important;
-}
 
 #resourceBox {
     margin:22px;
@@ -139,12 +148,19 @@ h3, p {
 }
 
 #singleResource {
-    padding:10px;
-    transition: background-color 0.5s ease
+    /*margin:10px;
+    padding:10px;*/
+    transition: background-color 0.5s ease;
+    
 }
 
 #singleResource:hover {
-    background-color:#D7D7D7;
+    background-color: #EEEEEE;
+    
+}
+
+.accordionColor {
+    background-color: #EEEEEE;
 }
 
 .btn {
@@ -158,4 +174,12 @@ h3, p {
 
 .editButton {
     font-size: 12px;
+}
+
+.changeTabColor {
+    background-color: yellow;
+  }
+
+.addTab {
+    width:100%;
 }

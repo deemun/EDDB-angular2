@@ -6,8 +6,9 @@ import { Component, Input,
   animate,
   keyframes } from '@angular/core';
 
-// import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
+
 import { DataService } from './data.service';
+import { FilterPipe } from './filter.pipe';
 declare var firebase: any;
 
 var $ = (window as any).$; //letting jquery be used in the application, typescript throwing errors
@@ -73,18 +74,26 @@ export class AppComponent {
   newResourceDescription = "";
   newResourceLink = "";
   newResourceAuthor = "";
+  isClassVisible = false;
   
   state: string = 'inactive';
-  currentEditedResource = {title : "", link: "", description: ""};
-  // RemoteResource: FirebaseObjectObservable<any>;
+  currentEditedResource = {title : "", link: "", description: "", time: new Date().toLocaleString()};
+  tabForEdit:any = {};
   
   
-  constructor(private dataService: DataService) { //creating a dataService to refer to DataService
-    // af: AngularFire was above in constructor.
-    // console.log(af);
-    // this.RemoteResource = af.database.object("/Resources");
-    // this.RemoteResource.subscribe(() => console.log("resources have loaded"));
+  
+  constructor() { //creating a dataService to refer to DataService
+   
     
+    // var password = "eddbubc";
+    // var myChoice = prompt("Please enter the password");
+    // while(myChoice != password){
+    //   myChoice = prompt("Please enter a valid password");
+    // }  //simple password prompt.
+    console.log("constructor ran");
+    
+   
+
   }
 
   //FIREBASE METHODS
@@ -94,13 +103,15 @@ export class AppComponent {
     //         debugger;  
     //         this.currentResources = this.resources[this.currentTab];
     // });
-
+    
     this.fbGetData();
+    
+    
   }
 
   fbGetData(){
     firebase.database().ref('/').once('child_added', (snapshot) => {
-      debugger;
+      
       this.resources = (snapshot.val()); // snapshot.val are the objects coming in
       this.tabs = (Object.keys(this.resources)); //getting tabs into an array
 
@@ -108,20 +119,26 @@ export class AppComponent {
       this.currentResources = this.resources[this.currentTab];
     })
   }
+
   
   
 
   clicked(tab){
     this.currentTab = tab;
     this.currentResources = this.resources[this.currentTab];
+    // $('.navbarButton').on('click', function(){
+    // $('.navbarButton').removeClass('navbarButtonSelected')
+    // $(this).addClass('navbarButtonSelected');
+    // });
+    this.isClassVisible = this.currentResources;
   }
 
   newTab(){
-    if (this.newTabName.length > 0) {
+    if (this.newTabName.length > 0) {  //validation and tab pushed into the array.
       this.tabs.push(this.newTabName);
       this.resources[this.newTabName] = []; // syntax for setting and getting a key is similar in hashs
       this.clicked(this.newTabName); // calling clicked function to set tab
-       //validation and tab pushed into the array.
+      
        
       this.saveResourcesToFirebase();
 
@@ -149,7 +166,7 @@ export class AppComponent {
     
   }
 
-  addResource(){
+  addResource(){ //saving resources using method above and (click)
     var resource = {
       title : this.newResourceTitle,
       link : this.newResourceLink,
@@ -157,9 +174,6 @@ export class AppComponent {
       time: new Date().toLocaleString(),
       author: this.newResourceAuthor
     }
-
-    console.log(resource);
-    console.log(this.currentResources);
     this.currentResources.push(resource);
     
     this.saveResourcesToFirebase();
@@ -171,7 +185,6 @@ export class AppComponent {
 
   saveResourcesToFirebase(){
     firebase.database().ref('/resources').update(this.resources);
-   
   }
 
 
@@ -183,16 +196,37 @@ export class AppComponent {
 
   toggleResource(){
    this.state = (this.state === 'inactive' ? 'active' : 'inactive');
+   console.log("single resource clicked");
+    
+    $('.collapsible').collapsible();
   }
 
   clickedEdit(resource){
-    this.openModal()
+    this.openModal();
     this.currentEditedResource = resource;
+    
 
 
   }
 
+  clickedEditTab(tab){
+    this.openModal();
+    this.tabForEdit = tab
+  }
+
+  saveEditResourcesToFirebase(resource){    //edited resource being saved, needed another method because of new timestamp
+    resource.time = new Date().toLocaleString();
+    firebase.database().ref('/resources').update(this.resources);
+  }
+
+  deleteResource(i){
+    this.currentResources.splice(i, 1);
+  }
+  
+
 }
+
+
 
 
 
