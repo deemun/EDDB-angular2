@@ -6,12 +6,13 @@
                     <img id="brandImage" src="assets/ed-logo-biggest.png">
                 </div>
                 <div id="navbarOptions">
+                       <a class="waves-effect waves-light btn addTab" (click)="openModal()" href="#modalAddTab">Add Tab<i class="material-icons right">create_new_folder</i></a>
+                    
                     <div (click)="clicked(tab)" class="navbarButton" *ngFor="let tab of tabs" (click)="toggleResource()" [@moveTab]='state' >
                         <!--[ngClass]="{'changeTabColor': isClassVisible }" to try and make tab 'active'-->
                         <a>{{tab}}</a>
                     </div>
-                  <a class="waves-effect waves-light btn addTab" (click)="openModal()" href="#modalAddTab">Add Tab<i class="material-icons right">playlist_add</i></a>
-                    
+               
                     <!-- ADD TAB MODAL -->
                     <div id="modalAddTab" class="modal">
                         <div class="modal-content">
@@ -46,7 +47,7 @@
                     </form>
                     
                     <div id="addResourceButton">
-                    <a class="waves-effect waves-light btn" (click)="clickedEditTab(tab)" href="#modalEditTab"><i class="material-icons right">playlist_add</i> Edit Tab</a>
+                    <a class="waves-effect waves-light btn" (click)="clickedEditTab(tab)" href="#modalEditTab"><i class="material-icons right">border_color</i> Edit Tab</a>
                     <a class="waves-effect waves-light btn" (click)="openModal()" href="#modal1"><i class="material-icons right">playlist_add</i> Add Resource</a>
 
                     <!-- CREATE RESOURCE Modal Structure -->
