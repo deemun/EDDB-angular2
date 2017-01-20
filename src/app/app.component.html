@@ -7,6 +7,7 @@
                 </div>
                 <div id="navbarOptions">
                     <div (click)="clicked(tab)" class="navbarButton" *ngFor="let tab of tabs" (click)="toggleResource()" [@moveTab]='state' >
+                        <!--[ngClass]="{'changeTabColor': isClassVisible }" to try and make tab 'active'-->
                         <a>{{tab}}</a>
                     </div>
                     
@@ -21,7 +22,7 @@
                     <p id="searchBarTitle" >{{currentTab}} </p>
                     <div id="searchInput">
                     <!--<a class="addResource"> Add Resource </a>-->
-                    <a class="waves-effect waves-light btn" (click)="openModal()" href="#modal1">Add Resource</a>
+                    <a class="waves-effect waves-light btn" (click)="openModal()" href="#modal1"><i class="material-icons right">playlist_add</i> Add Resource</a>
 
                     <!-- CREATE RESOURCE Modal Structure -->
                     <div id="modal1" class="modal">
@@ -30,31 +31,31 @@
                             <label for="first_name">Title</label>
                             <input class="title"(keyup)="userPressedResourceInputKey($event)" [(ngModel)]="newResourceTitle"/>
                             <label for="first_name">Link</label>
-                            <input class="link"(keyup)="userPressedResourceInputKey($event)" [(ngModel)]="newResourceLink"/>
+                            <input class="link" placeholder="Must have https://"(keyup)="userPressedResourceInputKey($event)" [(ngModel)]="newResourceLink"/>
                             <label for="first_name">Description</label>
                             <input class="description" (keyup)="userPressedResourceInputKey($event)" [(ngModel)]="newResourceDescription"/>
                             <label for="first_name">Created By</label>
                             <input class="author" (keyup)="userPressedResourceInputKey($event)" [(ngModel)]="newResourceAuthor"/>
                         </div>
                         <div class="modal-footer">
-                            <a (click)="addResource()" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="Materialize.toast('Resource Added!', 3000, 'rounded')">Create</a>
+                            <a (click)="addResource()" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="Materialize.toast('Resource Added!', 3000, 'rounded')">Create <i class="material-icons right">send</i></a>
                         </div>
                     </div>
                               
                     <!--<input type="text" name="searchterm" placeholder="Search Resources">-->
                     </div>
                 </div>
-                <div id="mainContentWindow">
-                    <div id="resourceBox" >
-                        <div (click)="toggleResource()" [@movePanel]='state'  *ngFor="let resource of currentResources">
+                <div id="mainContentWindow">    <!--RESOURCES BEGIN-->
+                    <div id="resourceBox" >  
+                        <div (click)="toggleResource()" [@movePanel]='state'  *ngFor="let resource of currentResources; let i = index">
                         
                         
 
                          <ul class="collapsible" data-collapsible="accordion">
                             <li>
-                            <div class="collapsible-header"><a href="{{resource.link}}" target="_blank">{{resource.title}}</a></div>
+                            <div class="collapsible-header accordionColor hoverable"><a href="{{resource.link}}" target="_blank">{{resource.title}}</a></div>
                             <div  id="singleResource" class="collapsible-body">
-                                    <p> {{resource.description}} <a style="float:right;" class="waves-effect waves-light btn editButton" (click)="clickedEdit(resource)" href="#editModal">Edit</a></p>
+                                    <p> {{resource.description}} <a style="float:right;" class="waves-effect waves-light btn editButton" (click)="clickedEdit(resource)" href="#editModal">Edit<i class="material-icons right">mode_edit</i></a></p>
                                     <p style="text-align: left;"><i> Last Updated by {{ resource.author }} on {{ resource.time }} </i></p>
                             </div>
                             </li>
@@ -66,7 +67,7 @@
                             <h5>Edit {{resource.title}}</h5>
                             <label for="first_name">Title</label>
                             <input class="title"(keyup)="userPressedResourceInputKey($event)" [(ngModel)]="currentEditedResource.title"/>
-                            <label for="first_name">Link</label>
+                            <label placeholder="Must contain https://"for="first_name">Link</label>
                             <input class="link"(keyup)="userPressedResourceInputKey($event)" [(ngModel)]="currentEditedResource.link"/>
                             <label for="first_name">Description</label>
                             <input class="description" (keyup)="userPressedResourceInputKey($event)" [(ngModel)]="currentEditedResource.description"/>
@@ -74,7 +75,8 @@
                             <input class="author" (keyup)="userPressedResourceInputKey($event)" [(ngModel)]="currentEditedResource.author" />
                         </div>
                         <div class="modal-footer">
-                            <a (click)="saveEditResourcesToFirebase(resource)" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="Materialize.toast('Resource Saved', 3000, 'rounded')">Save Edit</a>
+                            <a (click)="deleteResource(i)" class="modal-action modal-close waves-effect waves-green btn-flat" style="float: left;"><i class="material-icons right">delete</i>delete resource</a>
+                            <a (click)="saveEditResourcesToFirebase(resource)" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="Materialize.toast('Resource Saved', 3000, 'rounded')"><i class="material-icons right">save</i>Save Edit</a>
                         </div>
                         </div>                             
                         </div>

@@ -59,6 +59,14 @@
     transition:.5s;
 }
 
+.navbarButton:hover { 
+    background-color: #616161;
+}
+
+.navbarButtonSelected { 
+    background-color: #616161;
+}
+
 .navbarButton:focus {
     height:1000px;
     
@@ -104,13 +112,7 @@ input::-webkit-input-placeholder {
     /*overflow:auto;*/
 }
 
-.navbarButton:hover { 
-    background-color: #616161;
-}
 
-#navbarOptions .navbarButton:hover { 
-    color:white !important;
-}
 
 #resourceBox {
     margin:22px;
@@ -150,6 +152,10 @@ h3, p {
     
 }
 
+.accordionColor {
+    background-color: #EEEEEE;
+}
+
 .btn {
  background-color: #626262;
  transition: width height background-color 0.5s ease
@@ -162,4 +168,8 @@ h3, p {
 .editButton {
     font-size: 12px;
 }
+
+.changeTabColor {
+    background-color: yellow;
+  }
 

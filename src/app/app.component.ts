@@ -73,13 +73,14 @@ export class AppComponent {
   newResourceDescription = "";
   newResourceLink = "";
   newResourceAuthor = "";
+  isClassVisible = false;
   
   state: string = 'inactive';
   currentEditedResource = {title : "", link: "", description: "", time: new Date().toLocaleString()};
   // RemoteResource: FirebaseObjectObservable<any>;
   
   
-  constructor(private dataService: DataService) { //creating a dataService to refer to DataService
+  constructor() { //creating a dataService to refer to DataService
    
     
     // var password = "eddbubc";
@@ -87,7 +88,10 @@ export class AppComponent {
     // while(myChoice != password){
     //   myChoice = prompt("Please enter a valid password");
     // }  //simple password prompt.
+    console.log("constructor ran");
+    
    
+
   }
 
   //FIREBASE METHODS
@@ -97,8 +101,10 @@ export class AppComponent {
     //         debugger;  
     //         this.currentResources = this.resources[this.currentTab];
     // });
-
+    
     this.fbGetData();
+    
+    
   }
 
   fbGetData(){
@@ -111,12 +117,18 @@ export class AppComponent {
       this.currentResources = this.resources[this.currentTab];
     })
   }
+
   
   
 
   clicked(tab){
     this.currentTab = tab;
     this.currentResources = this.resources[this.currentTab];
+    // $('.navbarButton').on('click', function(){
+    // $('.navbarButton').removeClass('navbarButtonSelected')
+    // $(this).addClass('navbarButtonSelected');
+    // });
+    this.isClassVisible = this.currentResources;
   }
 
   newTab(){
@@ -183,9 +195,8 @@ export class AppComponent {
   toggleResource(){
    this.state = (this.state === 'inactive' ? 'active' : 'inactive');
    console.log("single resource clicked");
-    $(document).ready(function(){
+    
     $('.collapsible').collapsible();
-  });
   }
 
   clickedEdit(resource){
@@ -199,6 +210,10 @@ export class AppComponent {
   saveEditResourcesToFirebase(resource){    //edited resource being saved, needed another method because of new timestamp
     resource.time = new Date().toLocaleString();
     firebase.database().ref('/resources').update(this.resources);
+  }
+
+  deleteResource(i){
+    this.currentResources.splice(i, 1);
   }
   
 
