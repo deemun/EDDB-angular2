@@ -10,18 +10,43 @@
                         <!--[ngClass]="{'changeTabColor': isClassVisible }" to try and make tab 'active'-->
                         <a>{{tab}}</a>
                     </div>
+                  <a class="waves-effect waves-light btn addTab" (click)="openModal()" href="#modalAddTab">Add Tab<i class="material-icons right">playlist_add</i></a>
                     
-                    
-                    <input (keyup)="userPressedTabInputKey($event)" [(ngModel)]="newTabName"/><button (click)="newTab()">Create New tab </button> 
-                 
+                    <!-- ADD TAB MODAL -->
+                    <div id="modalAddTab" class="modal">
+                        <div class="modal-content">
+                            <h4>Create a new Tab</h4>
+                            <label for="first_name">Tab Name</label>
+                            <input (keyup)="userPressedTabInputKey($event)" [(ngModel)]="newTabName"/>
+                        </div>
+                        <div class="modal-footer">
+                            <a (click)="newTab()" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="Materialize.toast('Tab Added!', 3000)">Create <i class="material-icons right">send</i></a>
+                        </div>
+                    </div>
+
+                    <div id="modalEditTab" class="modal">
+                        <div class="modal-content">
+                            <h4>Edit {{currentTab}}</h4>
+                            <label for="first_name">Tab Name</label>
+                            <input (keyup)="userPressedTabInputKey($event)" [(ngModel)]="tabForEdit"/>
+                        </div>
+                        <div class="modal-footer">
+                            <a (click)="newTab()" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="Materialize.toast('Tab Added!', 3000)">Create <i class="material-icons right">send</i></a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div id="content">
                 <div id="searchBar">
                     <p id="searchBarTitle" >{{currentTab}} </p>
-                    <div id="searchInput">
-                    <!--<a class="addResource"> Add Resource </a>-->
+                    <form id="filter">
+                        <i class="material-icons left">search</i>
+                        <input type="email" name="searchterm" [(ngModel)]="term" [ngModelOptions]="{standalone:true}"  />
+                    </form>
+                    
+                    <div id="addResourceButton">
+                    <a class="waves-effect waves-light btn" (click)="clickedEditTab(tab)" href="#modalEditTab"><i class="material-icons right">playlist_add</i> Edit Tab</a>
                     <a class="waves-effect waves-light btn" (click)="openModal()" href="#modal1"><i class="material-icons right">playlist_add</i> Add Resource</a>
 
                     <!-- CREATE RESOURCE Modal Structure -->
@@ -38,7 +63,7 @@
                             <input class="author" (keyup)="userPressedResourceInputKey($event)" [(ngModel)]="newResourceAuthor"/>
                         </div>
                         <div class="modal-footer">
-                            <a (click)="addResource()" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="Materialize.toast('Resource Added!', 3000, 'rounded')">Create <i class="material-icons right">send</i></a>
+                            <a (click)="addResource()" class=" modal-action modal-close waves-effect waves-green btn-flat" onclick="Materialize.toast('Resource Added', 3000, 'rounded')">Create <i class="material-icons right">send</i></a>
                         </div>
                     </div>
                               
@@ -47,7 +72,7 @@
                 </div>
                 <div id="mainContentWindow">    <!--RESOURCES BEGIN-->
                     <div id="resourceBox" >  
-                        <div (click)="toggleResource()" [@movePanel]='state'  *ngFor="let resource of currentResources; let i = index">
+                        <div (click)="toggleResource()" [@movePanel]='state'  *ngFor="let resource of currentResources | filter:term ; let i = index">
                         
                         
 

@@ -6,8 +6,9 @@ import { Component, Input,
   animate,
   keyframes } from '@angular/core';
 
-// import {AngularFire, FirebaseObjectObservable} from 'angularfire2';
+
 import { DataService } from './data.service';
+import { FilterPipe } from './filter.pipe';
 declare var firebase: any;
 
 var $ = (window as any).$; //letting jquery be used in the application, typescript throwing errors
@@ -77,7 +78,8 @@ export class AppComponent {
   
   state: string = 'inactive';
   currentEditedResource = {title : "", link: "", description: "", time: new Date().toLocaleString()};
-  // RemoteResource: FirebaseObjectObservable<any>;
+  tabForEdit:any = {};
+  
   
   
   constructor() { //creating a dataService to refer to DataService
@@ -132,11 +134,11 @@ export class AppComponent {
   }
 
   newTab(){
-    if (this.newTabName.length > 0) {
+    if (this.newTabName.length > 0) {  //validation and tab pushed into the array.
       this.tabs.push(this.newTabName);
       this.resources[this.newTabName] = []; // syntax for setting and getting a key is similar in hashs
       this.clicked(this.newTabName); // calling clicked function to set tab
-       //validation and tab pushed into the array.
+      
        
       this.saveResourcesToFirebase();
 
@@ -200,11 +202,16 @@ export class AppComponent {
   }
 
   clickedEdit(resource){
-    this.openModal()
+    this.openModal();
     this.currentEditedResource = resource;
     
 
 
+  }
+
+  clickedEditTab(tab){
+    this.openModal();
+    this.tabForEdit = tab
   }
 
   saveEditResourcesToFirebase(resource){    //edited resource being saved, needed another method because of new timestamp
