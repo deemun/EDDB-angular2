@@ -211,7 +211,7 @@ export class AppComponent {
 
   clickedEditTab(tab){
     this.openModal();
-    this.tabForEdit = tab
+    this.tabForEdit = tab;
   }
 
   saveEditResourcesToFirebase(resource){    //edited resource being saved, needed another method because of new timestamp
