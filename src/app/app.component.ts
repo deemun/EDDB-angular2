@@ -78,7 +78,9 @@ export class AppComponent {
   
   state: string = 'inactive';
   currentEditedResource = {title : "", link: "", description: "", time: new Date().toLocaleString()};
-  tabForEdit:any = {};
+  tabForEdit: string;
+  newEditedTab: string;
+
   
   
   
@@ -113,11 +115,22 @@ export class AppComponent {
     firebase.database().ref('/').once('child_added', (snapshot) => {
       
       this.resources = (snapshot.val()); // snapshot.val are the objects coming in
-      this.tabs = (Object.keys(this.resources)); //getting tabs into an array
+      this.tabs = (Object.keys(this.resources).sort()); //getting tabs into an array
 
       this.currentTab = this.tabs[0]; // 
       this.currentResources = this.resources[this.currentTab];
     })
+        
+    firebase.database().ref('/').once('child_removed', (snapshot) => {
+      
+      this.resources = (snapshot.val()); // snapshot.val are the objects coming in
+      this.tabs = (Object.keys(this.resources)); //getting tabs into an array
+
+      if (this.resources[this.currentTab] === undefined){
+        this.currentTab = this.tabs[0]; // 
+      }
+      this.currentResources = this.resources[this.currentTab];
+    })  
   }
 
   
@@ -134,7 +147,7 @@ export class AppComponent {
   }
 
   newTab(){
-    if (this.newTabName.length > 0) {  //validation and tab pushed into the array.
+    if (this.newTabName.length > 0 && this.resources[this.newTabName] === undefined) {  //validation and tab pushed into the array.
       this.tabs.push(this.newTabName);
       this.resources[this.newTabName] = []; // syntax for setting and getting a key is similar in hashs
       this.clicked(this.newTabName); // calling clicked function to set tab
@@ -190,7 +203,7 @@ export class AppComponent {
 
 
   openModal(){ 
-    $('.modal').modal()
+    $('.modal').modal();
     
   }
 
@@ -209,18 +222,41 @@ export class AppComponent {
 
   }
 
-  clickedEditTab(tab){
+  clickedEditTab(tabToEdit){
     this.openModal();
-    this.tabForEdit = tab;
+    this.tabForEdit = tabToEdit; // setting ng model to current tab
+    this.newEditedTab = this.tabForEdit; // edited tab overides previous ng model
+    
+    
+  }
+
+  saveEditedTab(){
+    var savedTab = this.resources[this.tabForEdit];
+    delete this.resources[this.tabForEdit];
+    
+    firebase.database().ref('/resources').child(this.tabForEdit).remove();
+    this.resources[this.newEditedTab] = savedTab;
+    this.saveEditedTabToFirebase(this.resources);
+
+    this.tabs = Object.keys(this.resources).sort();
+    this.currentTab = this.newEditedTab;
+    
+    
   }
 
   saveEditResourcesToFirebase(resource){    //edited resource being saved, needed another method because of new timestamp
     resource.time = new Date().toLocaleString();
-    firebase.database().ref('/resources').update(this.resources);
+    firebase.database().ref('/resources').update(resource);
   }
+
+  saveEditedTabToFirebase(resource){
+    firebase.database().ref('/resources').update(resource);
+  }
+  
 
   deleteResource(i){
     this.currentResources.splice(i, 1);
+    this.saveEditResourcesToFirebase(this.resources);
   }
   
 
