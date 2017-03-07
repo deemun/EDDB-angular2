@@ -1,6 +1,6 @@
 # Emergency Department Database
 
-EDDB - This Angular2 Application is made to be a bookmark database of important links for the Emergency Department at BC Children's Hospital. Using Angular2, and FireBase for the backend.
+EDDB - This Angular2 Application is made to be a bookmark database of important links (resources) for the Emergency Department at BC Children's Hospital. Using Angular2, and FireBase for the backend.
 
 # Start up
 
