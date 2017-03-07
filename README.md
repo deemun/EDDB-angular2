@@ -8,8 +8,8 @@ Clone or fork the repo, run 'npm install' to download all dependencies and then 
 
 # Screen Caps
 
-![alt tag](http://imgur.com/gM55Zx5)
+![alt tag](screenshots/eddb-material.png)
 
-![alt tag](http://imgur.com/p3ws5fE)
+![alt tag](screenshots/eddb-material2.png)
 
 
